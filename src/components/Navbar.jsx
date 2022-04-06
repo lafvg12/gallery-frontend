@@ -16,7 +16,13 @@ import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 import MailOutlineIcon from "@mui/icons-material/MailOutline";
+import { makeStyles } from "@material-ui/core/styles";
 
+const useStyles = makeStyles({
+  navbarTotal: {
+    color: "#000000",
+  },
+});
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
@@ -58,6 +64,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
@@ -149,7 +157,7 @@ export default function Navbar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.navbarTotal}>
         <Toolbar>
           <CameraAltIcon
             size="large"
