@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import PhotoAlbum from "react-photo-album";
 import Navbar from "./components/Navbar";
 import "./index.css";
 import { Card } from "../src/components/Card";
@@ -14,17 +14,20 @@ function App() {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    getImages().then((images) => setImages(images));
+    getImages().then((images) => {
+      return setImages(images);
+    });
   }, []);
 
   return (
     <div>
       <Navbar />
-      {images.map((image) => (
+      <PhotoAlbum layout="masonry" photos={images} />
+      {/* {images.map((image) => (
         <div className="card">
           <Card data={image} />
         </div>
-      ))}
+      ))} */}
     </div>
   );
 }
