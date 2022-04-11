@@ -37,7 +37,6 @@ function App() {
   return (
     <div>
       <Navbar />
-
       {images.length > 0 ? (
         <PhotoAlbum layout="masonry" photos={images} />
       ) : (
