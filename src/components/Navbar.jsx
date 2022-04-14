@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -18,6 +19,9 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+  },
+  links: {
+    textDecoration: "none",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -119,7 +123,9 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <Link className={classes.links} to="/login">
+        <MenuItem onClick={handleMenuClose}>Login</MenuItem>
+      </Link>
     </Menu>
   );
 
@@ -166,7 +172,7 @@ export default function PrimarySearchAppBar() {
 
   return (
     <div className={classes.grow}>
-      <AppBar position="static" className={classes.back}>
+      <AppBar position="fixed" className={classes.back}>
         <Toolbar>
           <IconButton
             edge="start"
