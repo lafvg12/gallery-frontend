@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import { Cards } from "../src/components/Cards";
 import "./index.css";
 import { Register } from "../src/components/Register";
-import { Sign } from "./components/Sign";
+import { SignIn } from "./components/SignIn";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Cards />} />
         <Route path="/registro" element={<Register />} />
-        <Route path="/Sign" element={<Sign />} />
+        <Route path="/Sign" element={<SignIn />} />
       </Routes>
     </div>
   );
