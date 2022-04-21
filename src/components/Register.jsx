@@ -18,6 +18,8 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link as Links } from "react-router-dom";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -38,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     color: "white",
+    textDecoration: "none",
+  },
+  linkPassword: {
+    color: "#4056b5",
     textDecoration: "none",
   },
   image: {
@@ -79,39 +85,64 @@ const validationSchema = yup.object({
     .string("Enter your password")
     .min(6, "Password should be of minimum 6 characters length")
     .required("Password is required"),
+  confirmPassword: yup
+    .string("Enter your password")
+    .min(6, "Password should be of minimum 6 characters length")
+    .required("Password is required"),
 });
 function Register() {
   const classes = useStyles();
   const [phrase, setPhrase] = useState(false);
-  const notify = () => toast.success("Usuario Registrado Exitosamente!");
+  const notify = () => toast.success("User registered!");
 
-  const notifyBad = () => toast.warning("Usuario No pudo ser registrado!");
+  const notifyBad = () => toast.warning("User could not be registered!");
+  const notifyNotMatch = () => toast.warning("Passwords do not match!");
 
   const formik = useFormik({
     initialValues: {
-      email: "foobar@example.com",
-      password: "foobar",
+      email: "",
+      password: "",
+      confirmPassword: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
       values.role = "admin";
-      axios
-        .post("https://gallery-app-01.herokuapp.com/user/create", values)
-        .then(function (response) {
-          // console.log(response);
-          if (response.status === 201) {
-            notify();
-            setPhrase(true);
-          } else {
-            notifyBad();
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+
+      if (values.password !== values.confirmPassword) {
+        notifyNotMatch();
+      } else {
+        delete values.confirmPassword;
+        console.log(values);
+        axios
+          .post("https://gallery-app-01.herokuapp.com/user/create", values)
+          .then(function (response) {
+            // console.log(response);
+            if (response.status === 201) {
+              notify();
+              setPhrase(true);
+            } else {
+              notifyBad();
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
     },
   });
 
+  let navigate = useNavigate();
+  function handleClickLogin() {
+    setTimeout(() => {
+      navigate("/login");
+    }, 4000);
+  }
+
+  useEffect(() => {
+    if (phrase) {
+      handleClickLogin();
+    }
+  }, [phrase]);
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -122,7 +153,7 @@ function Register() {
             <AddAPhotoIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Registro
+            Register
           </Typography>
           <form
             className={classes.form}
@@ -159,35 +190,41 @@ function Register() {
               error={formik.touched.password && Boolean(formik.errors.password)}
               helperText={formik.touched.password && formik.errors.password}
             />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="confirmPassword"
+              label="Confirm Password"
+              type="password"
+              id="confirm"
+              autoComplete="current-password"
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              error={
+                formik.touched.confirmPassword &&
+                Boolean(formik.errors.confirmPassword)
+              }
+              helperText={
+                formik.touched.confirmPassword && formik.errors.confirmPassword
+              }
+            />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
 
-            {phrase ? (
-              <Links className={classes.links} to="/Sign">
-                <Button
-                  fullWidth
-                  variant="contained"
-                  color="secondary"
-                  className={classes.submit}
-                  // onClick={fetchData}
-                >
-                  Ingresa
-                </Button>
-              </Links>
-            ) : (
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                // onClick={fetchData}
-              >
-                Registrate
-              </Button>
-            )}
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              // onClick={fetchData}
+            >
+              Registrate
+            </Button>
             <ToastContainer />
             <Grid container>
               <Grid item xs>
@@ -196,9 +233,14 @@ function Register() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
+                <Links
+                  className={classes.linkPassword}
+                  href="#"
+                  to="/Sign"
+                  variant="body2"
+                >
+                  {"Do you have an account? Sign In"}
+                </Links>
               </Grid>
             </Grid>
             <Box mt={5}>

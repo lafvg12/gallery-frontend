@@ -15,6 +15,7 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -22,6 +23,10 @@ const useStyles = makeStyles((theme) => ({
   },
   links: {
     textDecoration: "none",
+  },
+  linkCamera: {
+    textDecoration: "none",
+    color: "white",
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -86,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+function Navbar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -123,8 +128,8 @@ export default function PrimarySearchAppBar() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <Link className={classes.links} to="/registro">
-        <MenuItem onClick={handleMenuClose}>Registro</MenuItem>
+      <Link className={classes.links} to="/register">
+        <MenuItem onClick={handleMenuClose}>Register</MenuItem>
       </Link>
     </Menu>
   );
@@ -174,14 +179,16 @@ export default function PrimarySearchAppBar() {
     <div className={classes.grow}>
       <AppBar position="static" className={classes.back}>
         <Toolbar>
-          <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton>
+          <Link className={classes.linkCamera} to="/">
+            <IconButton
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="open drawer"
+            >
+              <PhotoCameraIcon />
+            </IconButton>
+          </Link>
           <Typography className={classes.title} variant="h6" noWrap>
             Gallery App
           </Typography>
@@ -239,3 +246,5 @@ export default function PrimarySearchAppBar() {
     </div>
   );
 }
+
+export { Navbar };

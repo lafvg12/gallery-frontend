@@ -15,6 +15,7 @@ import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
+import { Link as Links } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -35,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+  },
+  linkDontCount: {
+    color: "#4056b5",
+    textDecoration: "none",
   },
   avatar: {
     margin: theme.spacing(1),
@@ -65,8 +70,8 @@ function SignIn() {
 
   const formik = useFormik({
     initialValues: {
-      email: "example@example.com",
-      password: "foobar",
+      email: "",
+      password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -147,9 +152,14 @@ function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Links
+                className={classes.linkDontCount}
+                to="/register"
+                href="#"
+                variant="body2"
+              >
                 {"Don't have an account? Sign Up"}
-              </Link>
+              </Links>
             </Grid>
           </Grid>
         </form>

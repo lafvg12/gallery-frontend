@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PhotoAlbum from "react-photo-album";
-import Navbar from "./Navbar";
+import { Navbar } from "./Navbar";
 
 import "../../src/index.css";
 import Lottie from "react-lottie";
