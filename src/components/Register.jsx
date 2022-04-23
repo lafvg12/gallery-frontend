@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: "#4056b5",
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -223,7 +223,7 @@ function Register() {
               className={classes.submit}
               // onClick={fetchData}
             >
-              Registrate
+              Sign in
             </Button>
             <ToastContainer />
             <Grid container>
@@ -236,7 +236,7 @@ function Register() {
                 <Links
                   className={classes.linkPassword}
                   href="#"
-                  to="/Sign"
+                  to="/login"
                   variant="body2"
                 >
                   {"Do you have an account? Sign In"}

@@ -1,5 +1,4 @@
 import React from "react";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -11,11 +10,13 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import AddAPhotoIcon from "@material-ui/icons/AddAPhoto";
 import * as yup from "yup";
 import { useFormik } from "formik";
 import axios from "axios";
 import { Link as Links } from "react-router-dom";
+import Lottie from "react-lottie";
+
+import data from "../../src/./data.json";
 
 function Copyright() {
   return (
@@ -30,6 +31,15 @@ function Copyright() {
   );
 }
 
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: data,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -41,9 +51,8 @@ const useStyles = makeStyles((theme) => ({
     color: "#4056b5",
     textDecoration: "none",
   },
-  avatar: {
+  lottie: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
   },
   form: {
     width: "100%", // Fix IE 11 issue.
@@ -91,12 +100,16 @@ function SignIn() {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <AddAPhotoIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        {/* <Typography component="h1" variant="h5">
           Sign in
-        </Typography>
+        </Typography> */}
+        <Lottie
+          className={classes.lottie}
+          options={defaultOptions}
+          height={200}
+          width={200}
+        />
+
         <form
           className={classes.form}
           noValidate
@@ -147,7 +160,12 @@ function SignIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link
+                onClick={() => {
+                  alert("Work in progress");
+                }}
+                variant="body2"
+              >
                 Forgot password?
               </Link>
             </Grid>
