@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -15,6 +15,8 @@ import { useFormik } from "formik";
 import axios from "axios";
 import { Link as Links } from "react-router-dom";
 import Lottie from "react-lottie";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import data from "../../src/./data.json";
 
@@ -65,6 +67,19 @@ const useStyles = makeStyles((theme) => ({
 
 function SignIn() {
   const classes = useStyles();
+  const [phrase, setPhrase] = useState(false);
+
+  let navigate = useNavigate();
+  function handleClickLogin() {
+    setTimeout(() => {
+      navigate("/profile");
+    }, 2000);
+  }
+  useEffect(() => {
+    if (phrase) {
+      handleClickLogin();
+    }
+  }, [phrase]);
 
   const validationSchema = yup.object({
     email: yup
@@ -88,7 +103,15 @@ function SignIn() {
         .post("https://gallery-app-01.herokuapp.com/auth/login", values)
         .then(function (response) {
           // console.log(response);
-          console.log(response);
+          if (response.status === 200) {
+            setPhrase(true);
+            const token = response.data.access_token;
+            const id = response.data.user._id;
+            window.localStorage.setItem("token", token);
+            window.localStorage.setItem("id", id);
+
+            console.log(response);
+          }
         })
         .catch(function (error) {
           console.log(error);

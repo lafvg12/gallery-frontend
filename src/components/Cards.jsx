@@ -34,11 +34,18 @@ const Cards = () => {
       return setImages(images);
     });
   }, []);
+
   return (
     <div>
       <Navbar />
       {images.length > 0 ? (
-        <PhotoAlbum layout="masonry" photos={images} />
+        <PhotoAlbum
+          onClick={() => {
+            alert("Clicked");
+          }}
+          layout="masonry"
+          photos={images}
+        />
       ) : (
         <Lottie
           options={defaultOptions}
